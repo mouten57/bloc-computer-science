@@ -1,0 +1,60 @@
+///////////EXERCISES///////////////////
+>1. What is the main difference between a stack and a queue?
+
+The main difference between a stack and queue is that a stack implements a LIFO priority collection, while a queue implements a FIFO priority collection. In a stack we remove the item the most recently added; in a queue, we remove the item the least recently added.
+
+>2. What are the similarities between stacks and queues?
+- They both are used to store data
+- They enable engineers to rank tasks
+- Allow an order of operations
+- Support system functions
+
+
+3. Imagine you are an engineer tasked with implementing the UNDO and REDO options in a word processor such as Microsoft Word. Which data structure would you use for each option and why?
+
+- UNDO/REDO: For implementing the undo/redo function, I'd probably use LIFO, or a stack, because I'd want to look at the most recent arrival first. For undo, I'd pop off the most recent item and push it onto a redo stack; for re-do, I'd pop off the most recent item from the redo stack and push it back on the main (undo) stack.
+
+/////////PROGRAMMING QUESTIONS//////////
+1. Given a string, reverse it using a stack. For example, the string "Bloc!" should be converted to "!colB".
+
+function REVERSE(original) {
+  let stack = [];
+  for (let i = 0; i < original.length; i++)
+    stack.push(original[i]);
+  
+  let reversed = '';
+  for (let i = stack.length-1; i >= 0; i--)
+    reversed += stack[i];
+  return reversed;
+}
+
+
+2. Implement the delete functionality of a stack using one queue. Make a FIFO data structure mirror the functionality of a LIFO data structure.
+
+-To delete an item, take all of the elements in the queue one at a time and put them at the end of the queue, except for the last one which should be deleted and returned.
+
+CLASS Stack
+FUNCTION pop(queue) {
+   let list = [];
+   for (let i = 0; i < queue.length-1; i++)
+    list.push(queue[i]);
+  let deleted = queue[queue.length-1]
+  return deleted
+}
+ END FUNCTION
+END CLASS
+
+
+3. Fill in the methods for the following Queue class so that it will work as expected (FIFO).
+
+CLASS QUEUE
+ FUNCTION enqueue(element)
+   APPEND element to the end of the list
+ END FUNCTION
+
+ FUNCTION dequeue
+   SET temp to the first element
+  REMOVE FIRST element of list from list
+  RETURN temp
+ END FUNCTION
+END CLASS
