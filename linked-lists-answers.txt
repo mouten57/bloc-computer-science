@@ -27,11 +27,11 @@ LinkedList.prototype.push = function(element) {
    THEN SET head to node
  ELSE
     SET current to this.head
-  WHILE currentNode.next {
-    SET currentNode to currentNode.next
+  WHILE (current.next) {
+    SET current to curren.next
     }
 
-    SET currentNode.next to node;
+    SET current.next to node;
 
  }
 }
