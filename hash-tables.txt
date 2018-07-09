@@ -85,8 +85,17 @@ class StoreNewspaper{
   }
   set(publisher, publicationDate) {
     this.list[hash(publicationDate)] = [publisher, publicationDate];
+    this.list[hash(publisher)] = [publisher, publicationDate]
   }
-  get(item) {
-    return this.list[hash(item)]
+  get(publisherOrDate) {
+    return this.list[hash(publisherOrDate)]
   }
 }
+let m = new StoreNewspaper()
+m.set('USA TODAY', 'Dec 14, 1999')
+m.set('HOUSTON CHRONICLE', 'Dec 25, 1999')
+m.set('Charlotte News', 'Dec 14, 2015')
+
+console.log(m.get('USA TODAY'))
+console.log(m.get('Dec 14, 1999'))
+console.log(m.get('Dec 14, 2015'))
