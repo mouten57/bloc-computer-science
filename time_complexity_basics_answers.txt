@@ -39,7 +39,7 @@ END FUNCTION
 
 
 GROWTH RATE: 0(n) -> linear growth rate
-^I chose this because the function had a single for loop.
+^I chose this because the function had a single for loop and the amount of times that it runs depends on the size of the array input.
 
 
 7. Determine the time complexity of the following snippet of code.
