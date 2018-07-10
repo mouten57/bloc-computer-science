@@ -1,0 +1,74 @@
+Provide all code and written answers in a file named algorithms_introduction_answers.txt:
+//////////////////////////////////////////
+1. Using proper pseudo-code, describe the following primitive algorithms:
+//////////////////////////////////////////
+    * Making coffee;
+
+    IF there is no filter
+        ADD filter
+    ELSE
+         REPEAT
+            ADD coffee to filter 
+        UNTIL desired amount is achieved
+        REPEAT
+            ADD water to water container 
+        UNTIL desired amount is achieved
+        PRESS button to start coffee maker
+    ENDIF
+//////////////////////////////////////////
+    * Washing dishes;
+PRERINSE
+        IF dirty dishes > 0
+            FILL sink with water
+            ADD soap
+            WHILE dirty dishes > 0
+                ADD dirty dishes to sink
+            ENDWHILE
+        ENDIF
+
+SCRUBBING
+    WHILE dirty dishes > 0
+        FOR each dish
+            SCRUB dish with sponge
+            ADD dish to rinse pile
+        ENDFOR
+    ENDWHILE
+    
+RINSING
+WHILE rinse pile > 0
+        FOR each dish
+            RINSE dish with cold water
+            ADD dish to dry rack
+        ENDFOR
+    ENDWHILE
+//////////////////////////////////////////
+* Brushing Teeth
+IF WAKEUP or BEFORESLEEP
+    GET toothbrush
+    ADD toothpaste to toothbrush
+    ADD water to toothbrush
+    WHILE time < 120 seconds
+        SCRUB teeth with toothbrush
+    ENDWHILE
+    RINSE toothbrush
+    RINSE mouth
+    SET toothbrush back in toothbrush holder
+ENDIF
+//////////////////////////////////////////        
+2. As with the knot algorithm, there may be more than one way to solve the problem. It is essential to try to pick the best algorithm for a situation. Name three companies who created an algorithm that made them successful, e.g., Google's search algorithm. It doesn't need to be a tech example (such as a recipe or manufacturing a product). Google's algorithm produces more relevant results than other search engines; what about each of your cases make them stand out?
+//////////////////////////////////////////
+-Ford's assembly Line
+    -reduces the time it takes to build a car from 12 hours to 2.5 hours.
+    -Ford broke the Model T’s assembly into 84 discrete steps and trained each of his workers to do just one
+-Uber
+    -revolutionized cab hailing. Customers could request a ride from their phone and Uber’s algorithm allowed drivers to find closest match. 
+
+-IBM’s CRUSH (Criminal Reduction Utilizing Statistical History)
+    -It allows police to evaluate incident patterns throughout a city and forecast criminal "hot spots" to "proactively allocate resources and deploy personnel, resulting in improved force effectiveness and increased public safety."
+
+//////////////////////////////////////////
+3. Hypothesize about what constitutes an efficient algorithm versus an inefficient algorithm.
+
+-an efficient algorithm is one that optimizes time and working memory to complete a task (minimum amount of time and minimum amount of space and shouldn’t overload memory).
+
+-an inefficient algorithm does not optimize time or working memory. Some examples are not using keys, nesting loops, using loops that take too long or that iterate through unnecessary data, and repeating code that does the same thing over and over.
