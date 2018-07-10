@@ -1,0 +1,190 @@
+/////////////////////QUESTIONS////////////////////
+1. What is a binary tree and what makes it unique to other trees?
+
+-Trees are non-linear data structures. They don’t store data in a linear way. They organize data hierarchically. A tree is a collection of entities called nodes. Nodes are connected by edges. Each node contains a value or data, and it may or may not have a child node .
+
+-A binary tree is a specific type of tree data structure in which each node has at the most two children, which are referred to as the left child and the right child. 
+
+2. What is a heuristic?
+
+-A 'best guess' by a software engineer. It is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution. This is achieved by trading optimality, completeness, accuracy, or precision for speed. In a way, it can be considered a shortcut.
+
+3. What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+-Another example of heuristic making an algorithm faster occurs in certain search problems. Initially, the heuristic tries every possibility at each step, like the full-space search algorithm. But it can stop the search at any time if the current possibility is already worse than the best solution already found. 
+
+4. What is the difference between a depth-first search and a breadth-first search?
+
+-Depth-first search(DFS) is an algorithm that explores a path all the way from the root to a leaf before backtracking and exploring another path.
+
+-Breadth-first search(BFS) is an algorithm that traverses the tree level by level and depth by depth. Start at the tree root and explore the neighbor nodes first, before moving to the next level neighbors.
+
+
+5. Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+-A graph that connects nodes in an order that doesn't matter, results in a dead-end(no cycle or complete circuit), and does not assign cost of travel between nodes.
+
+6. What kind of graph is a binary search tree?
+
+-directed, a-cyclic, unweighted graph
+
+/////////////////////EXERCISES////////////////////
+
+For the following questions, describe in words how you could solve the problem and then do so. Use the depiction of the Binary Search Tree to refer to the examples.
+
+1. Given a Binary Search Tree and a value, write a function that checks to see whether the value exists within the tree.
+Example: The value 10 exists in the tree. The value 23 does not exist in the tree.
+-I would create a function called search that takes in 2 arguments, the node to search through(in this case, the root node), and the data or number to search for. 
+-I would first look to see to whether the node exists, if it doesn't, return 'this value doesnt exist in the tree.' 
+-Then I would check to see if input data is larger or smaller than node.data. If smaller, keep moving left. If larger, move right. After each move, restart the search function.
+
+-Once it finds that data is equal to the node data, return (`The value ${data} exists in the tree.`)
+
+// Node class
+class Node
+{
+    constructor(data)
+    {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+// Binary Search tree class
+class BinarySearchTree
+{
+    constructor()
+    {
+        // root of a binary seach tree
+        this.root = null;
+    }
+ 
+    // function to be implemented
+    // helper method which creates a new node to 
+// be inserted and calls insertNode
+insert(data)
+{
+    // Creating a node and initailising 
+    // with data 
+    var newNode = new Node(data);
+                     
+    // root is null then node will
+    // be added to the tree and made root.
+    if(this.root === null)
+        this.root = newNode;
+    else
+ 
+        // find the correct position in the 
+        // tree and add the node
+        this.insertNode(this.root, newNode);
+}
+ 
+// Method to insert a node in a tree
+// it moves over the tree to find the location
+// to insert a node with a given data 
+insertNode(node, newNode)
+{
+    // if the data is less than the node
+    // data move left of the tree 
+    if(newNode.data < node.data)
+    {
+        // if left is null insert node here
+        if(node.left === null)
+            node.left = newNode;
+        else
+ 
+            // if left is not null recurr until 
+            // null is found
+            this.insertNode(node.left, newNode); 
+    }
+ 
+    // if the data is more than the node
+    // data move right of the tree 
+    else
+    {
+        // if right is null insert node here
+        if(node.right === null)
+            node.right = newNode;
+        else
+ 
+            // if right is not null recurr until 
+            // null is found
+            this.insertNode(node.right,newNode);
+    }
+}
+    getRootNode()
+{
+    return this.root;
+}
+    // search for a node with given data
+search(node, data)
+{
+   // if trees is empty return null
+    if(node === null)
+        return (`The value ${data} does not exist in the tree.`);
+ 
+    // if data is less than node's data
+    // move left
+    else if(data < node.data)
+        return this.search(node.left, data);
+ 
+    // if data is more than node's data
+    // move right
+    else if(data > node.data)
+        return this.search(node.right, data);
+ 
+    // if data is equal to the node data 
+    // return node
+    else
+        return (`The value ${data} exists in the tree.`);
+}
+}
+
+// create an object for the BinarySearchTree
+var sample= new BinarySearchTree();
+ 
+// Inserting nodes to the BinarySearchTree
+sample.insert(15);
+sample.insert(25);
+sample.insert(10);
+
+var root = sample.getRootNode();
+// console.log(root)
+
+var searchfor10 = sample.search(root, 10)
+console.log(searchfor10)
+
+var searchfor23 = sample.search(root, 23)
+console.log(searchfor23)
+
+
+2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
+Example: The distance between the nodes 4 and 10 is 4. The distance between the nodes 8 and 10 is 1. The distance between the nodes 1 and 14 is 4.
+
+To find distance between n1 and n2, follow this formula: 
+Distance(root, n1) + Distance(root, n2) – 2*(Distance(root to LCA(n1,n2)
+
+So I need to find distance between n1 and root, distance between n2 and root, find the least common ancestor of n1 and n2, then find the distance between the root and that least common ancestor.
+
+findLCA(root, n1, n2) -> start with root. 
+        If root>n1 and root>n2, go left.
+        If root <n1 and root <n2, go right.
+        If both scenarios are false, we are at the LCA, return root.
+
+distanceFromRoot(root, n1)-> 
+        set counter to 0.
+        start from root and compare to n1; if matched, we found node.
+        Else go left and right until you find node.
+        When you find node, stop recursion.
+        While going back to root while backtracking, add 1 to counter.
+
+        **Final return gives # of nodes between root and n1, so distance is (number of nodes-1)
+
+////////// ALL PUT TOGETHER ///////////////
+distanceBetweenNodes(root, n1, n2)
+    int x = Pathlength(root, n1) - 1;
+	int y = Pathlength(root, n2) - 1;
+	int LCAdata = findLCA(root, n1, n2).data;
+	int LCAdistance = Pathlength(root, LCAdata) - 1;
+	return (x + y) - 2 * LCAdistance;
