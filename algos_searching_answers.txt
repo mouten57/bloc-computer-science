@@ -1,0 +1,62 @@
+Short Answer
+1. What is a real-life scenario that uses linear search?
+
+-You are looking for a student in a classroom where you don't know the kids names. You go through the roster one by one until you find the child you are looking for.
+
+2. What is a real-life scenario that uses binary search?
+
+-Searching for a book in the library. Assuming they are alphabetically listed (they should be, it's a library!), think of the first letter of the artists last name (your search criteria), then start your search the middle rack. From there you can go left or right to narrow down your search.
+
+3. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using linear search?
+
+-7 iterations
+
+
+4. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using binary search?
+
+-3 iterations. 1 sets low,mid,high then looks to upper part. 2 updates L,M,H and then looks to upper part. 3 updates L,M,H to "G" and then terminates, returning "G".
+
+5. Given an unsorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
+
+-I would choose a linear search because it works on unsorted collections. A binary search would not work on an unsorted collection.
+
+6. Given a sorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
+
+-I would choose a binary search because it would work well (and quicker than a linear search) on a sorted list. It would cut down the programs work time compared to a linear search.
+
+
+Programming Assignment:
+1. You and a friend have set a wager to see who can find the word "Albatross" in the dictionary the fastest. Write a program to allow you to win the bet.
+
+***I feel like this question is a little bit tricky. Since I know "Albatross" is near the beginning of the dictionary, I'm tempted to use a linear search because I have a feeling it won't have as many iterations as a binary search would in this case. BUT..it's a sorted collection, so I'm going to go with a binary search***
+
+FUNCTION dictionarySearch(collection, value)
+    SET low to FIRST INDEX of collection
+    SET high to LAST INDEX of collection
+
+    WHILE low <= high
+        SET mid to (low+high) / 2
+        IF collection[mid] > value THEN 
+            SET high to mid-1
+        ELSE IF collection[mid] < value
+            SET low to mid + 1
+        ELSE 
+            RETURN mid
+        ENDIF
+    END WHILE
+
+    RETURN NOT FOUND
+
+
+
+2. You work at a pet store, and a child has asked you to net the only white-spotted goldfish from the fish tank. Write a program that will help you net the right fish.
+
+FUNCTION fishSearch(collection, target)
+FOR each fish in the collection
+    IF fish = target
+        RETURN fish
+    END IF
+END FOR
+
+RETURN NOT FOUND
+
