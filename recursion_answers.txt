@@ -1,0 +1,94 @@
+///////////QUESTIONS///////////
+
+1. Define and compare recursion and iteration.
+
+Recursion: technique where a function calls itself with parameters incrementally moving towards one of the base cases. Recursive solutions tend to run slower and are more subject to system limitations than iterative solutions. 
+
+Iteration: technique of utilizing a loop to repeat a process. Iterative solutions can sometimes be harder to implement.
+
+2. Name five algorithms that are commonly implemented by recursion.
+
+-Fibonacci Sequence
+-Factorial Operation    
+-Binary Search
+-Quick Sort
+-Merge Sort
+
+3. When should you use recursion, and when should you avoid recursion? Give examples for each.
+
+When an algorithm can be defined as a combination of sub-results starting with known cases, then a recursive solution makes the most sense (factorial).
+
+Algorithms requiring a pass over a collection works well as an iterative solution (finding the maximum or minimum).
+
+Recursive implementation has a tendency to repeat calculations and introduces a performance concern that sometimes outweighs the cost of the slightly more complex iterative implementation.
+
+
+4. Compare the recursive and iterative solutions to the three algorithms from the checkpoint (Factorial, Maximum, and Fibonacci). What is similar, and what is different?
+
+Factorial:
+-The recursive method for solving a factorial takes a number and 
+returns 1 if the number passed is 0 or 1, and if it's larger than 1, the function calls itself with with the factorial of the previous number (number passed - 1) until it gets down to 1. It then multiplies the number passed times the factorial of the previous number until it gets back to (and completes) the first call.
+
+-The iterative method for soliving a factorial takes a number and returns error is number is less than 0. Otherwise, it sets up an intial result of one, then runs a FOR loop. In the FOR loop, it runs (i=number; i=2; i--) so it runs x times where x is the difference between the number and 2. Each time it runs, it multiplies result * i and sets that to result. When the FOR loop ends, it returns the results.
+
+Maximum:
+-The recursive method for this is trickier than the iterative method, for sure. Probably less efficient, too. It looks at an array of numbers to find the maximum. It takes the first value from numbers then recursively calls Maximum with the remaining numbers. Once it finds the maximum of one of these smaller collections, it compares it to the item that it held on to and returns whichever one is larger.
+
+-The iterative method is much cleaner than the recursive version. The function sets currrentMax to the first number of numbers (array input), then runs a FOR loop, running x number of times where x=the number of numbers after the first number. In the FOR loop, if the number > currentMax, set currentMax to number. It runs through once and finds the max. Unlike the recursive function, the iterative version runs through once and is done.
+
+Fibonacci:
+-The recursive method for this ends up branching into multiple recursive calls per recursion step(CONFUSING and messy). Focusing on an input larger than 2, the function calls itself with two less than the current number and save it as twoBack.It does the same with one less than number and saves it as oneBack. Finally, it adds those two together and returns the result. For this implementation, it calls the same procedure twice in the recursive case.
+
+-The iterative version is very similar to the fibonacci version, except it doesn't branch off. It keeps track of 2 numbers to add in as variables, one for the previousNumber and one for the currentNumber. The function runs a FOR loop, from i=3 up to number, and sets newCurrent to previous + current, sets previous to current, and sets current to newCurrent (adds the last 2 numbers to get the next number). 
+
+
+5. Given a multi-dimensional collection (such as an array) where the number of dimensions is unknown, write a recursive algorithm to count the number of items in the entire collection.
+
+const deepCountElements = (array) => {
+  let counter = 0;
+  for(let i=0; i<array.length; i++){
+    if(typeof array[i] === "object"){
+      counter += deepCountElements(array[i]);
+    } else {
+      counter++;
+    }
+  } return counter;
+}
+
+console.log(deepCountElements([1,2,3,4,[5,6,7],8])) //8
+
+6. A palindrome is a word or phrase whose spelling is the same either direction (e.g., racecar). Write a recursive algorithm to determine if a given word or phrase is a palindrome.
+
+const isPalindrome = (string) => {
+    var strLen = string.length;
+    if (strLen === 0 || strLen === 1) {
+        return true;
+    }
+    
+    if (string[0] === string[strLen - 1]) {
+        return isPalindrome( string.slice(1, strLen - 1) );
+    }
+    
+    return false;
+};
+
+console.log(isPalindrome('racecar'));
+
+
+7. Laura and Xander are going door-to-door around their block looking for their lost cat. Write a recursive algorithm showing one way they can visit every house on their block exactly once.
+
+const houses = ["Address 1", "Address 2", "Address 3", "Address 4", "Address 5", ];
+
+const checkHouses = (houses) => {
+	if(houses.length === 0){
+		return "FINISH";
+	} else {
+        //instructions
+        console.log(`search ${houses[0]}`);
+		return checkHouses(houses.slice(1));
+	}
+}
+
+console.log(checkHouses(houses));
+
+
