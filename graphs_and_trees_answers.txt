@@ -40,151 +40,204 @@ Example: The value 10 exists in the tree. The value 23 does not exist in the tre
 
 -Once it finds that data is equal to the node data, return (`The value ${data} exists in the tree.`)
 
-// Node class
-class Node
-{
-    constructor(data)
-    {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
+function Node(val) {
+  this.value = val;
+  this.left = null;
+  this.right = null;
 }
 
-// Binary Search tree class
-class BinarySearchTree
-{
-    constructor()
-    {
-        // root of a binary seach tree
-        this.root = null;
-    }
- 
-    // function to be implemented
-    // helper method which creates a new node to 
-// be inserted and calls insertNode
-insert(data)
-{
-    // Creating a node and initailising 
-    // with data 
-    var newNode = new Node(data);
-                     
-    // root is null then node will
-    // be added to the tree and made root.
-    if(this.root === null)
-        this.root = newNode;
-    else
- 
-        // find the correct position in the 
-        // tree and add the node
-        this.insertNode(this.root, newNode);
+function BinarySearchTree() {
+  this.root = null;
 }
- 
-// Method to insert a node in a tree
-// it moves over the tree to find the location
-// to insert a node with a given data 
-insertNode(node, newNode)
-{
-    // if the data is less than the node
-    // data move left of the tree 
-    if(newNode.data < node.data)
-    {
-        // if left is null insert node here
-        if(node.left === null)
-            node.left = newNode;
-        else
- 
-            // if left is not null recurr until 
-            // null is found
-            this.insertNode(node.left, newNode); 
+
+BinarySearchTree.prototype.push = function(val) {
+  var root = this.root;
+
+  if (!root) {
+    this.root = new Node(val);
+    return;
+  }
+
+  var currentNode = root;
+  var newNode = new Node(val);
+
+  while (currentNode) {
+    if (val < currentNode.value) {
+      if (!currentNode.left) {
+        currentNode.left = newNode;
+        break;
+      } else {
+        currentNode = currentNode.left;
+      }
+    } else {
+      if (!currentNode.right) {
+        currentNode.right = newNode;
+        break;
+      } else {
+        currentNode = currentNode.right;
+      }
     }
- 
-    // if the data is more than the node
-    // data move right of the tree 
-    else
-    {
-        // if right is null insert node here
-        if(node.right === null)
-            node.right = newNode;
-        else
- 
-            // if right is not null recurr until 
-            // null is found
-            this.insertNode(node.right,newNode);
-    }
-}
-    getRootNode()
+  }
+};
+
+BinarySearchTree.prototype.getRootNode = function()
 {
     return this.root;
 }
-    // search for a node with given data
-search(node, data)
-{
-   // if trees is empty return null
-    if(node === null)
-        return (`The value ${data} does not exist in the tree.`);
- 
-    // if data is less than node's data
-    // move left
-    else if(data < node.data)
-        return this.search(node.left, data);
- 
-    // if data is more than node's data
-    // move right
-    else if(data > node.data)
-        return this.search(node.right, data);
- 
-    // if data is equal to the node data 
-    // return node
-    else
-        return (`The value ${data} exists in the tree.`);
-}
+
+// search for a node with given data
+BinarySearchTree.prototype.searchResult = function(rootNode, val) {
+  if (!rootNode) {
+    return("Value " + val + " does not exist in this tree.");
+  }
+  if (val < rootNode.value) {
+    return this.searchResult(rootNode.left, val);
+  } else if (val > rootNode.value) {
+    return this.searchResult(rootNode.right, val);
+  } else {
+    return("Value " + val + " exists in this tree.");
+  }
 }
 
-// create an object for the BinarySearchTree
-var sample= new BinarySearchTree();
- 
-// Inserting nodes to the BinarySearchTree
-sample.insert(15);
-sample.insert(25);
-sample.insert(10);
+var binaryTree = new BinarySearchTree();
+binaryTree.push(15);
+binaryTree.push(10);
+binaryTree.push(25);
+binaryTree.push(9);
+binaryTree.push(11);
+binaryTree.push(19);
+binaryTree.push(36);
+binaryTree.push(8);
+binaryTree.push(20);
+binaryTree.push(41);
 
-var root = sample.getRootNode();
-// console.log(root)
-
-var searchfor10 = sample.search(root, 10)
-console.log(searchfor10)
-
-var searchfor23 = sample.search(root, 23)
-console.log(searchfor23)
-
+console.log(binaryTree.searchResult(binaryTree.root, 42)) // "Value 42 does not exist in this tree."
+console.log(binaryTree.searchResult(binaryTree.root, 41)) // "Value 41 exists in this tree."
 
 2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
 Example: The distance between the nodes 4 and 10 is 4. The distance between the nodes 8 and 10 is 1. The distance between the nodes 1 and 14 is 4.
 
-To find distance between n1 and n2, follow this formula: 
-Distance(root, n1) + Distance(root, n2) – 2*(Distance(root to LCA(n1,n2)
+function Node(val) {
+  this.value = val;
+  this.left = null;
+  this.right = null;
+}
 
-So I need to find distance between n1 and root, distance between n2 and root, find the least common ancestor of n1 and n2, then find the distance between the root and that least common ancestor.
+function BinarySearchTree() {
+  this.root = null;
+}
 
-findLCA(root, n1, n2) -> start with root. 
-        If root>n1 and root>n2, go left.
-        If root <n1 and root <n2, go right.
-        If both scenarios are false, we are at the LCA, return root.
+BinarySearchTree.prototype.push = function(val) {
+  var root = this.root;
 
-distanceFromRoot(root, n1)-> 
-        set counter to 0.
-        start from root and compare to n1; if matched, we found node.
-        Else go left and right until you find node.
-        When you find node, stop recursion.
-        While going back to root while backtracking, add 1 to counter.
+  if (!root) {
+    this.root = new Node(val);
+    return;
+  }
 
-        **Final return gives # of nodes between root and n1, so distance is (number of nodes-1)
+  var currentNode = root;
+  var newNode = new Node(val);
 
-////////// ALL PUT TOGETHER ///////////////
-distanceBetweenNodes(root, n1, n2)
-    int x = Pathlength(root, n1) - 1;
-	int y = Pathlength(root, n2) - 1;
-	int LCAdata = findLCA(root, n1, n2).data;
-	int LCAdistance = Pathlength(root, LCAdata) - 1;
-	return (x + y) - 2 * LCAdistance;
+  while (currentNode) {
+    if (val < currentNode.value) {
+      if (!currentNode.left) {
+        currentNode.left = newNode;
+        break;
+      } else {
+        currentNode = currentNode.left;
+      }
+    } else {
+      if (!currentNode.right) {
+        currentNode.right = newNode;
+        break;
+      } else {
+        currentNode = currentNode.right;
+      }
+    }
+  }
+};
+
+BinarySearchTree.prototype.searchBool = function(rootNode, val) {
+  if (!rootNode) {
+    return false;
+  }
+  if (val < rootNode.value) {
+    return this.searchBool(rootNode.left, val);
+  } else if (val > rootNode.value) {
+    return this.searchBool(rootNode.right, val);
+  } else {
+    return true;
+  }
+}
+
+BinarySearchTree.prototype.distanceFromRoot = function(root, node) {
+    let counter=0;
+     if (!this.searchBool(root, node)) {
+      return 'node does not exist';
+    }else if (root.value == node) {
+    counter = 0;
+  } else if (root.value > node) {
+    counter = 1 + this.distanceFromRoot(root.left, node);
+  } else {
+    counter = 1 + this.distanceFromRoot(root.right, node); 
+  }
+  return counter;
+}
+
+
+BinarySearchTree.prototype.distanceBetween = function(root, node1, node2) {
+  if (this.searchBool(binaryTree.root, node1) && this.searchBool(binaryTree.root, node2)) {
+    if (node1===root && node2===root){
+      return `Total distance between nodes: 0`
+    } else if (node1===root) {
+      return `Total distance between nodes: ${this.distanceFromRoot(root, node2)}`;
+    } else if (node2===root) {
+      return `Total distance between nodes: ${this.distanceFromRoot(root, node1)}`;
+      ;
+    }
+      
+    // Both lie in left
+    if (root.value > node1 && root.value > node2) {
+      if (node1 < node2){
+        return this.distanceBetween(root.left, node1, node2);
+      }else{ 
+        return this.distanceBetween(root.left, node2, node1);
+      }
+    }
+    // Both lie in right
+    if (root.value < node1 && root.value < node2) {
+      if (node1 < node2){
+        return this.distanceBetween(root.right, node1, node2);
+      }else{ 
+        return this.distanceBetween(root.right, node2, node1);
+      }
+      return this.distanceBetween(root.right, node1, node2);
+    }
+    // Lie in opposite directions (Root is LCA of two nodes)
+    if (root.value >= node1 && root.value <= node2) {
+      return `Total distance between nodes: ${this.distanceFromRoot(root, node1) + this.distanceFromRoot(root, node2)}` ;
+    }
+  } else {
+    return "One or both of the selected nodes does not exist in the tree";
+  }
+}
+
+// Inserting nodes to the BinarySearchTree
+var binaryTree = new BinarySearchTree();
+binaryTree.push(15);
+binaryTree.push(10);
+binaryTree.push(25);
+binaryTree.push(9);
+binaryTree.push(11);
+binaryTree.push(19);
+binaryTree.push(36);
+binaryTree.push(8);
+binaryTree.push(20);
+binaryTree.push(41);
+
+console.log(binaryTree.distanceBetween(binaryTree.root, 8, 41)) //"Total distance between nodes: 6"
+console.log(binaryTree.distanceBetween(binaryTree.root, 15, 36)) //"Total distance between nodes: 2"
+console.log(binaryTree.distanceBetween(binaryTree.root, binaryTree.root, binaryTree.root))//"Total distance between nodes: 0"
+console.log(binaryTree.distanceBetween(binaryTree.root,binaryTree.root, 25 )) //"Total distance between nodes: 1"
+console.log(binaryTree.distanceBetween(binaryTree.root, 36,binaryTree.root )) //"Total distance between nodes: 2"
+console.log(binaryTree.distanceBetween(binaryTree.root, 8, binaryTree.root )) //"Total distance between nodes: 3"
